@@ -1,0 +1,49 @@
+import bpy
+
+
+#active_object = bpy.context.active_obj
+#bpy.context.scene.voxel_use_selected_bones = True
+
+
+def SelectBones():
+    obj = bpy.data.objects.get("metarig")
+    
+    Bones_To_Exclude = ["Eye_R","Eye_L","Jaw"]
+    
+    if obj.type == 'ARMATURE':
+        armature = obj.data
+    else:
+        Print("no armature selected")
+        return
+      
+    
+    for bone in armature.bones:
+        if bone.name not in Bones_To_Exclude:
+            bone.select = True
+            print(bone.name)
+            print("selected succesfully")
+            
+    
+    
+    
+def SetWeightPaint(asset):
+    
+    SelectBones()
+    
+    if asset.type != "MESH":
+        print("Can not weighPaint to no mesh object")
+        return
+    
+    bpy.ops.object.select_all(action='DESELECT')
+    bpy.context.view_layer.objects.active = asset
+    armature = bpy.data.objects.get("metarig")
+    
+    armature.select_set(True)
+    asset.select_set(True)
+    
+    bpy.context.scene.voxel_use_selected_bones = True
+    
+    bpy.ops.wm.voxel_heat_diffuse()
+    
+    
+obj = bpy.context.active_object 
