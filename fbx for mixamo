@@ -24,3 +24,34 @@ def exportFbxForMixamo():
         
         
 exportFbxForMixamo()
+
+
+import bpy
+
+
+def exportFbxForMixamo():
+    all_objects = bpy.context.view_layer.objects
+    
+    armature = bpy.data.objects.get('metarig')
+    armature.select_set(True)
+    bpy.ops.object.delete()
+    
+    for item in all_objects:
+        if item.type == "MESH" and item.name != "Body":
+            item.data.uv_layers.active.name = "UV"
+            item.select_set(True)
+            print("****", item.name)
+        body_mesh = bpy.data.objects.get("Body")
+        body_mesh.data.uv_layers.active.name = "UV"
+        body_mesh.select_set(True)
+        bpy.context.view_layer.objects.active = body_mesh
+        
+        bpy.ops.object.join()
+        
+        
+   
+        
+        
+        
+exportFbxForMixamo()
+
