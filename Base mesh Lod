@@ -1,0 +1,41 @@
+def CreateLodForBaseMesh(self,lod_level):
+        bpy.ops.object.select_all(action='DESELECT')
+        obj = bpy.data.objects.get("Body")
+        obj.select_set(True)
+        bpy.context.view_layer.objects.active = obj
+        
+        if obj.mode != "EDIT":
+            print("not in edit mode")
+            bpy.ops.object.mode_set(mode='EDIT')
+        
+        
+        
+        if lod_level == 1:
+            vertex_group_names = ["Lod_01"]
+            
+        elif lod_level == 2:
+            vertex_group_names = ["Lod_01", "Lod_02"]
+        
+        elif lod_level == 3:
+            vertex_group_names = ["Lod_01", "Lod_02","Lod_03"]
+            
+        elif lod_level == 4:
+            vertex_group_names = ["Lod_01", "Lod_02","Lod_03", "Lod_04"]
+            
+        
+            
+        for vG_name in vertex_group_names:
+            bpy.ops.mesh.select_all(action='DESELECT') 
+            
+            vertex_group = obj.vertex_groups[vG_name]
+            print(vertex_group.name)
+            
+            bpy.ops.object.vertex_group_set_active(group=vG_name)
+            
+            
+            bpy.ops.object.vertex_group_select()
+            bpy.ops.mesh.dissolve_edges()
+            print("----- deleted the vertex groups --------- ")
+            
+            
+        bpy.ops.object.mode_set(mode='OBJECT')
