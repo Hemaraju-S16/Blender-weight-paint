@@ -7,7 +7,13 @@ obj = bpy.data.objects.get("Body")
 
 
 def CreateLodForBaseMesh(lod_level):
-    vertex_group_name
+    obj = bpy.data.objects.get("Body")
+    
+    if obj.mode != "EDIT":
+        print("not in edit mode")
+        bpy.ops.object.mode_set(mode='EDIT')
+    
+    
     
     if lod_level == 1:
         vertex_group_name = "lod 1 vertex group"
@@ -18,15 +24,28 @@ def CreateLodForBaseMesh(lod_level):
     elif lod_level == 3:
         vertex_group_name = "lod 3 vertex group"
         
+    elif lod_level == 0:
+        vertex_group_name = "Group" 
         
+    if vertex_group_name in obj.vertex_groups:
+        bpy.ops.mesh.select_all(action='DESELECT') 
+
+        vertex_group = obj.vertex_groups[vertex_group_name]
+        bpy.ops.object.vertex_group_select()
+        bpy.ops.mesh.dissolve_edges()
         
+    bpy.ops.object.mode_set(mode='OBJECT')
+        
+CreateLodForBaseMesh(0)    
+    
+  
     
     
 
 if vertex_group_name in obj.vertex_groups:
-     = "lod 1 vertex group"
+     
     bpy.ops.mesh.select_all(action='DESELECT') 
 
     vertex_group = obj.vertex_groups[vertex_group_name]
     bpy.ops.object.vertex_group_select()
-    bpy.ops.mesh.dissolve_verts()
+    bpy.ops.mesh.dissolve_edges()
