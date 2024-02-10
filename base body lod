@@ -1,0 +1,32 @@
+import bpy
+
+
+obj = bpy.data.objects.get("Body")
+
+
+
+
+def CreateLodForBaseMesh(lod_level):
+    vertex_group_name
+    
+    if lod_level == 1:
+        vertex_group_name = "lod 1 vertex group"
+        
+    elif lod_level == 2:
+        vertex_group_name = "lod 2 vertex group"
+    
+    elif lod_level == 3:
+        vertex_group_name = "lod 3 vertex group"
+        
+        
+        
+    
+    
+
+if vertex_group_name in obj.vertex_groups:
+     = "lod 1 vertex group"
+    bpy.ops.mesh.select_all(action='DESELECT') 
+
+    vertex_group = obj.vertex_groups[vertex_group_name]
+    bpy.ops.object.vertex_group_select()
+    bpy.ops.mesh.dissolve_verts()
